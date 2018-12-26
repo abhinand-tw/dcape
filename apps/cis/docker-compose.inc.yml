@@ -46,6 +46,7 @@
       - /etc/cron.d:/etc/cron.d
       - ./var/data/cis/hook:/hook:ro
       - ./var:${DCAPE_ROOT}/var
+      - /dev/log:/dev/log
     command: -hooks /etc/webhook/local.json -hooks /etc/webhook/remote.json -hotreload -nopanic -verbose
     environment:
       - DEPLOY_ROOT=${DCAPE_ROOT}/var
