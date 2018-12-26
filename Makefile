@@ -212,6 +212,19 @@ psql:
 	&& docker exec -it $$DCAPE_DB psql -U postgres
 
 # ------------------------------------------------------------------------------
+# upgrades
+
+upgrade-1.0.initdb:
+	# перенести конфиги из var/data/db-conf.d
+	mv ./var/data/db-conf.d ./var/data/db/conf.d
+	# перенести файлы из var/data/db-shared
+	mv var/data/db-shared/* var/data/db-init
+	# если был установлен [pg-skel]() - добавить скрипт инициализации
+	[ -d var/data/db-init/tsearch_data ] && curl -O tsearch_data.sh
+	# восстановить include_dir
+	# TODO:sed var/data/db/postgresql.conf
+
+# ------------------------------------------------------------------------------
 # .env file store
 
 ## get env tag from store, `make env-get TAG=app--config--tag`
